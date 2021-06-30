@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+{{ pagination.info }}
+
+<div class="table-wrapper">
+    <table class="fl-table">
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Title</th>
+                <th>Date of publishing</th>
+                <th>Content</th>
+                <th>Most used words</th>
+                <th>Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for item in items %}
+    <tr>
+    	<td>{{ loop.index + pagination.skip }}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.date_of_publishing}}</td>
+        <td><a href="{{url_for('article_content', index=loop.index)}}">Към съдържанието</a></td>
+        <td>{% for x, y in item.most_used_words.items() %}
+            {{x}} = {{y}}<br>
+            {% endfor %}</td>
+        <td><a href="{{url_for('article_comments', index=loop.index)}}">Към коментарите</a></td>
+    </tr>
+    {% endfor %}
+ </tbody>
+    </table>
+    
+</div>
+<div class="menu">
+{{ pagination.links }}
+</div>
+{% endblock %}
